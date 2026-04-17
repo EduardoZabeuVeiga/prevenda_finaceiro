@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plano de Investimento - App Financeiro para Tatuadores</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bebas+Neue&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    @page { size: A4 portrait; margin: 0; }
+    body { font-family: 'Inter', sans-serif; background: #18181b; display: flex; justify-content: center; padding: 20px; }
+    .flyer { width: 210mm; min-height: 297mm; background: #0f0f0f; position: relative; color: #e4e4e7; }
+
+    /* HERO */
+    .hero { background: linear-gradient(160deg,#0f0f0f 0%,#1a1a1a 40%,#1c1917 70%,#0f0f0f 100%); padding: 18px 26px 12px; display: flex; align-items: center; gap: 18px; position: relative; border-bottom: 2px solid #b91c1c; }
+    .hero::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,transparent,#b91c1c 30%,#ef4444 50%,#b91c1c 70%,transparent); }
+    .hero-left { flex:1; }
+    .hero-badge { display:inline-block; background:rgba(239,68,68,0.15); color:#fca5a5; font-size:0.48rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; padding:2px 8px; border-radius:3px; border:1px solid rgba(239,68,68,0.3); margin-bottom:5px; }
+    .hero h1 { font-family:'Bebas Neue',sans-serif; font-size:2rem; font-weight:400; line-height:0.92; letter-spacing:2px; color:#fafafa; }
+    .hero h1 span { color:#ef4444; }
+    .hero .tagline { font-size:0.6rem; color:#a1a1aa; margin-top:5px; line-height:1.4; max-width:320px; }
+    .hero .tagline strong { color:#fca5a5; }
+    .hero-right { display:flex; gap:6px; align-items:flex-start; }
+    .hero-img { border-radius:5px; box-shadow:0 4px 20px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.06); object-fit:cover; }
+    .hero-img.main { width:170px; height:auto; }
+    .hero-img.side { width:170px; height:auto; opacity:0.88; }
+
+    /* IMPACT BAR */
+    .impact-bar { background:linear-gradient(90deg,#7f1d1d,#991b1b,#b91c1c,#991b1b,#7f1d1d); display:flex; align-items:center; justify-content:center; gap:22px; padding:7px 20px; }
+    .impact-item { display:flex; align-items:center; gap:5px; color:#fff; }
+    .impact-item .ii-icon { font-size:0.9rem; }
+    .impact-item .ii-text { font-size:0.52rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; }
+    .impact-sep { width:4px; height:4px; background:rgba(255,255,255,0.3); border-radius:50%; }
+
+    /* SECTION TITLE */
+    .section-title { font-family:'Bebas Neue',sans-serif; font-size:0.85rem; letter-spacing:3px; text-transform:uppercase; color:#ef4444; margin-bottom:8px; display:flex; align-items:center; gap:10px; }
+    .section-title::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(239,68,68,0.4),transparent); }
+
+    /* SCREENSHOTS */
+    .screenshots { padding:10px 26px 8px; display:grid; grid-template-columns:1.8fr 1fr 1fr 1fr; gap:8px; align-items:start; }
+    .ss-card { text-align:center; }
+    .ss-card img { width:100%; border-radius:5px; box-shadow:0 3px 12px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.08); display:block; }
+    .ss-card.featured img { border:1.5px solid rgba(239,68,68,0.45); box-shadow:0 4px 20px rgba(239,68,68,0.2); }
+    .ss-label { color:#71717a; font-size:0.48rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
+    .ss-label strong { color:#fca5a5; }
+    .ss-badge { display:inline-block; background:rgba(239,68,68,0.15); color:#fca5a5; font-size:0.42rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; padding:2px 7px; border-radius:3px; border:1px solid rgba(239,68,68,0.25); margin-bottom:3px; }
+
+    /* PROBLEMA */
+    .problem-section { padding:10px 26px 6px; }
+    .problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .prob-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:6px; padding:9px 11px; display:flex; gap:8px; align-items:flex-start; }
+    .prob-card.red { border-color:rgba(239,68,68,0.25); background:rgba(239,68,68,0.05); }
+    .prob-card .pc-icon { font-size:1rem; flex-shrink:0; margin-top:1px; }
+    .prob-card h3 { font-size:0.62rem; font-weight:700; color:#fafafa; line-height:1.2; }
+    .prob-card p { font-size:0.52rem; color:#a1a1aa; line-height:1.3; margin-top:2px; }
+
+    /* TABELA */
+    .table-section { padding:8px 26px 6px; }
+    .valor-table { width:100%; border-collapse:collapse; }
+    .valor-table th { background:rgba(239,68,68,0.12); color:#fca5a5; font-size:0.52rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:5px 9px; text-align:left; border-bottom:1px solid rgba(239,68,68,0.2); }
+    .valor-table td { font-size:0.55rem; color:#d4d4d8; padding:5px 9px; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .valor-table tr.alt td { background:rgba(255,255,255,0.02); }
+    .valor-table tr.total td { background:rgba(239,68,68,0.08); color:#fafafa; font-weight:700; font-size:0.58rem; border-top:1px solid rgba(239,68,68,0.25); border-bottom:none; }
+    .valor-table tr.sub td { color:#71717a; font-size:0.52rem; border-bottom:none; }
+    .valor-table tr.roi td { background:rgba(239,68,68,0.12); color:#ef4444; font-family:'Bebas Neue',sans-serif; font-size:0.88rem; letter-spacing:1px; border:none; }
+    .nota { margin-top:5px; background:rgba(255,255,255,0.02); border-left:2px solid #ef4444; border-radius:0 4px 4px 0; padding:5px 9px; font-size:0.49rem; color:#a1a1aa; line-height:1.4; }
+    .nota strong { color:#fca5a5; }
+
+    /* CONTRAPARTIDAS */
+    .contra-section { padding:8px 26px 6px; }
+    .contra-grid { display:grid; grid-template-columns:1fr 1.6fr; gap:8px; }
+    .contra-card { border-radius:6px; padding:10px 12px; border:1.5px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.02); }
+    .contra-card.featured { border-color:rgba(239,68,68,0.3); background:rgba(239,68,68,0.05); }
+    .contra-title { font-family:'Bebas Neue',sans-serif; font-size:0.78rem; letter-spacing:1.5px; color:#fafafa; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+    .contra-card.featured .contra-title { color:#fca5a5; }
+    .contra-tag { font-size:0.42rem; background:rgba(239,68,68,0.15); color:#fca5a5; padding:1px 6px; border-radius:2px; border:1px solid rgba(239,68,68,0.2); font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+    .contra-card ul { list-style:none; padding:0; }
+    .contra-card ul li { font-size:0.52rem; color:#a1a1aa; padding:2.5px 0; border-bottom:1px solid rgba(255,255,255,0.04); display:flex; align-items:flex-start; gap:5px; line-height:1.35; }
+    .contra-card ul li:last-child { border-bottom:none; }
+    .check { color:#ef4444; font-size:0.55rem; flex-shrink:0; margin-top:1px; }
+    .contra-obs { font-size:0.46rem; color:#52525b; margin-top:5px; }
+
+    /* PORTFOLIO */
+    .port-section { padding:8px 26px 6px; }
+    .port-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
+    .port-card { border-radius:6px; border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.025); overflow:hidden; }
+    .port-card.add { border:1px dashed rgba(239,68,68,0.2); background:rgba(239,68,68,0.02); }
+    .port-thumb { width:100%; height:50px; background:linear-gradient(135deg,#1a1a1a,#232323); display:flex; align-items:center; justify-content:center; font-size:1.4rem; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .port-card.add .port-thumb { color:#3f3f46; border-bottom:1px dashed rgba(239,68,68,0.15); }
+    .port-info { padding:5px 7px; }
+    .port-name { font-size:0.55rem; font-weight:700; color:#fafafa; line-height:1.2; }
+    .port-card.add .port-name { color:#3f3f46; }
+    .port-desc { font-size:0.46rem; color:#71717a; margin-top:2px; line-height:1.3; }
+    .port-card.add .port-desc { color:#27272a; }
+    .port-tag { display:inline-block; margin-top:3px; background:rgba(239,68,68,0.12); color:#fca5a5; font-size:0.4rem; font-weight:700; text-transform:uppercase; padding:1px 5px; border-radius:2px; border:1px solid rgba(239,68,68,0.2); }
+
+    /* PROTOCOLO */
+    .proto-section { padding:8px 26px 6px; }
+    .proto-box { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.07); border-radius:6px; padding:10px 14px; display:flex; gap:16px; align-items:flex-start; }
+    .proto-steps { flex:1; display:flex; flex-direction:column; gap:5px; }
+    .proto-step { display:flex; gap:8px; align-items:flex-start; }
+    .ps-num { width:16px; height:16px; background:#ef4444; color:#fff; border-radius:50%; font-size:0.45rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+    .ps-text { font-size:0.52rem; color:#a1a1aa; line-height:1.35; }
+    .ps-text strong { color:#fafafa; }
+    .proto-closing { margin-top:5px; font-size:0.49rem; color:#52525b; border-top:1px solid rgba(255,255,255,0.05); padding-top:5px; }
+    .proto-right { text-align:center; flex-shrink:0; border-left:1px solid rgba(255,255,255,0.06); padding-left:16px; }
+    .pr-label { font-size:0.44rem; color:#52525b; text-transform:uppercase; letter-spacing:1px; }
+    .pr-name { font-family:'Bebas Neue',sans-serif; font-size:0.95rem; color:#fafafa; letter-spacing:1px; margin-top:2px; }
+    .pr-local { font-size:0.45rem; color:#71717a; margin-top:1px; }
+    .pr-aporte-label { font-size:0.42rem; color:#52525b; text-transform:uppercase; letter-spacing:1px; margin-top:10px; }
+    .pr-aporte-value { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#ef4444; line-height:1; letter-spacing:1px; }
+    .pr-aporte-note { font-size:0.42rem; color:#52525b; line-height:1.3; margin-top:2px; }
+
+    /* RODAPE */
+    .footer { background:linear-gradient(90deg,#0f0f0f,#1a1a1a,#0f0f0f); border-top:2px solid #b91c1c; color:#fff; padding:9px 26px; display:flex; align-items:center; justify-content:space-between; }
+    .footer-left .fl-title { font-family:'Bebas Neue',sans-serif; font-size:0.88rem; letter-spacing:2px; }
+    .footer-left .fl-title span { color:#ef4444; }
+    .footer-left .fl-sub { font-size:0.44rem; color:#52525b; margin-top:1px; }
+    .footer-center { display:flex; gap:14px; }
+    .footer-tag { display:flex; align-items:center; gap:4px; font-size:0.48rem; color:#71717a; font-weight:600; }
+    .footer-right { text-align:right; }
+    .footer-right .fr-cta { font-family:'Bebas Neue',sans-serif; font-size:0.75rem; color:#ef4444; letter-spacing:1.5px; }
+    .footer-right .fr-contact { font-size:0.58rem; font-weight:700; color:#e4e4e7; margin-top:3px; letter-spacing:0.5px; }
+    .footer-right .fr-note { font-size:0.42rem; color:#71717a; margin-top:2px; }
+
+    /* WHATSAPP FLOAT */
+    .whatsapp-float { position:fixed; bottom:24px; right:24px; z-index:9999; display:flex; align-items:center; gap:10px; background:#25d366; color:#fff; font-family:'Inter',sans-serif; font-size:0.75rem; font-weight:700; padding:10px 18px 10px 14px; border-radius:50px; text-decoration:none; box-shadow:0 4px 20px rgba(37,211,102,0.45); transition:transform 0.15s, box-shadow 0.15s; }
+    .whatsapp-float:hover { transform:translateY(-2px); box-shadow:0 6px 28px rgba(37,211,102,0.6); }
+    .whatsapp-float svg { width:22px; height:22px; flex-shrink:0; }
+
+    @media print {
+        body { background:none; padding:0; }
+        .flyer { width:100%; }
+        *, *::before, *::after { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+        .whatsapp-float { display:none !important; }
+    }
+</style>
+</head>
+<body>
+<div class="flyer">
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-left">
+            <div class="hero-badge">Plano de Investimento - Antecipacao de Ativos</div>
+            <div style="font-size:0.52rem;font-weight:700;color:#fca5a5;letter-spacing:1px;margin-bottom:4px;">Eduardo Veiga &nbsp;·&nbsp; (11) 91124-3626</div>
+            <h1>INVISTA NO <span>APP</span><br>FINANCEIRO FEITO<br>PARA <span>TATUADORES</span></h1>
+            <p class="tagline">
+                O <strong>primeiro sistema de gestao financeira</strong> criado exclusivamente para tatuadores e estudios de tattoo. Produto funcional, mercado de +500 mil profissionais.
+                <strong>Aporte de R$750 retorna R$2.780 em ativos reais</strong> — ROI imediato de +270%.
+            </p>
+        </div>
+        <div class="hero-right">
+            <img class="hero-img side" src="img/tut-cabecalho.png       " alt="Resumo financeiro">
+            <img class="hero-img main" src="img/tut-sidebar.png" alt="Graficos de desempenho">
+        </div>
+    </div>
+
+    <!-- IMPACT BAR -->
+    <div class="impact-bar">
+        <div class="impact-item"><span class="ii-icon">🎯</span><span class="ii-text">Nicho sem concorrencia</span></div>
+        <div class="impact-sep"></div>
+        <div class="impact-item"><span class="ii-icon">⚡</span><span class="ii-text">Produto pronto e funcional</span></div>
+        <div class="impact-sep"></div>
+        <div class="impact-item"><span class="ii-icon">💰</span><span class="ii-text">ROI imediato de +270%</span></div>
+        <div class="impact-sep"></div>
+        <div class="impact-item"><span class="ii-icon">🖥️</span><span class="ii-text">Site incluso no aporte</span></div>
+        <div class="impact-sep"></div>
+        <div class="impact-item"><span class="ii-icon">🔑</span><span class="ii-text">Early Access garantido</span></div>
+    </div>
+
+    <!-- SCREENSHOTS: grafico em destaque + 3 menores -->
+    <div class="screenshots">
+        <div class="ss-card featured">
+            <div class="ss-badge">⭐ Destaque — Relatorio Grafico</div>
+            <img src="img/tut-rel-graficos.png" alt="Graficos financeiros do app">
+            <div class="ss-label"><strong>Graficos</strong> — rosca, barras e evolucao mensal</div>
+        </div>
+        <div class="ss-card">
+            <img src="img/tut-rel-cartoes.png" alt="Resumo financeiro">
+            <div class="ss-label"><strong>Resumo</strong> entradas e saidas</div>
+        </div>
+        <div class="ss-card">
+            <img src="img/tut-rel-categorias.png" alt="Categorias de despesas">
+            <div class="ss-label"><strong>Categorias</strong> de despesas</div>
+        </div>
+        <div class="ss-card">
+            <img src="img/tut-tabela.png" alt="Sessoes registradas">
+            <div class="ss-label"><strong>Sessoes</strong> e lancamentos</div>
+        </div>
+    </div>
+
+    <!-- O PROBLEMA -->
+    <div class="problem-section">
+        <div class="section-title">O problema que o app resolve</div>
+        <div class="problem-grid">
+            <div class="prob-card">
+                <span class="pc-icon">😤</span>
+                <div>
+                    <h3>Tatuador nao sabe quanto lucra no mes</h3>
+                    <p>Sessoes entram, tinta, aluguel e luz saem. Sem controle, o artista trabalha muito e nao ve onde o dinheiro vai. Apps genericos nao falam a lingua do estudio.</p>
+                </div>
+            </div>
+            <div class="prob-card red">
+                <span class="pc-icon">🖋️</span>
+                <div>
+                    <h3>App de gestao criado do zero para esse nicho</h3>
+                    <p>Controle de sessoes, despesas do estudio, contas fixas recorrentes, graficos de lucro e alertas. Desenvolvido com centenas de horas de engenharia de software.</p>
+                </div>
+            </div>
+            <div class="prob-card">
+                <span class="pc-icon">📊</span>
+                <div>
+                    <h3>+500 mil tatuadores no Brasil sem solucao</h3>
+                    <p>2 maior mercado de tatuagem do mundo, crescendo dois digitos ao ano. Nenhum software financeiro e pensado para esse publico especifico.</p>
+                </div>
+            </div>
+            <div class="prob-card red">
+                <span class="pc-icon">🚀</span>
+                <div>
+                    <h3>O produto esta pronto — aporte e para publicar</h3>
+                    <p>O core do app esta completamente desenvolvido. O aporte de R$750 financia exclusivamente infraestrutura e publicacao online. Zero desperdicio.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABELA DE VALOR -->
+    <div class="table-section">
+        <div class="section-title">1. Demonstrativo de valor — o que voce recebe pelo aporte de R$750</div>
+        <table class="valor-table">
+            <thead>
+                <tr>
+                    <th>Componente da Oferta</th>
+                    <th style="text-align:right;">Valor Estimado de Mercado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Desenvolvimento de Site Institucional Estatico (HTML, CSS, JS)</td>
+                    <td style="text-align:right;">R$ 2.500,00</td>
+                </tr>
+                <tr class="alt">
+                    <td>Licenca de Acesso Antecipado ao App (Early Access)</td>
+                    <td style="text-align:right;">R$ 100,00</td>
+                </tr>
+                <tr>
+                    <td>01 Mes de Hospedagem de Alta Performance</td>
+                    <td style="text-align:right;">R$ 80,00</td>
+                </tr>
+                <tr class="alt">
+                    <td>01 Mes de Mensalidade do App de Gestao Financeira (carencia)</td>
+                    <td style="text-align:right;">R$ 100,00</td>
+                </tr>
+                <tr class="total">
+                    <td>VALOR TOTAL EM SERVICOS E ATIVOS</td>
+                    <td style="text-align:right;">R$ 2.780,00</td>
+                </tr>
+                <tr class="sub">
+                    <td>Custo do aporte para o investidor</td>
+                    <td style="text-align:right;">R$ 750,00</td>
+                </tr>
+                <tr class="roi">
+                    <td>BENEFICIO IMEDIATO — ROI EM ATIVOS</td>
+                    <td style="text-align:right;">+ 270,66%</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="nota">
+            <strong>Nota Tecnica:</strong> O desenvolvimento do core business ja consumiu centenas de horas de engenharia de software. O investidor adquire ativos que valem mais de 3,7x o valor do aporte financeiro inicial.
+            <strong>O aporte nao constitui cessao de participacao societaria (equity).</strong> O montante e destinado exclusivamente a infraestrutura e publicacao da aplicacao.
+        </div>
+    </div>
+
+    <!-- CONTRAPARTIDAS -->
+    <div class="contra-section">
+        <div class="section-title">2. Termo de acordo — contrapartidas formalizadas</div>
+        <div class="contra-grid">
+            <div class="contra-card featured">
+                <div class="contra-title">🔑 Contrapartida A <span class="contra-tag">Acesso ao Software</span></div>
+                <ul>
+                    <li><span class="check">✓</span> Acesso antecipado (Early Access) ao app de gestao financeira para tatuadores</li>
+                    <li><span class="check">✓</span> Liberacao em ate 7 a 14 dias apos confirmacao do aporte</li>
+                    <li><span class="check">✓</span> Isencao da primeira mensalidade — 1 mes de carencia contado a partir do lancamento comercial (Go-Live)</li>
+                </ul>
+                <div class="contra-obs">Valor desta contrapartida: R$200,00</div>
+            </div>
+            <div class="contra-card">
+                <div class="contra-title">🖥️ Contrapartida B <span class="contra-tag" style="background:rgba(255,255,255,0.06);color:#a1a1aa;border-color:rgba(255,255,255,0.1);">Website + Hospedagem</span></div>
+                <ul>
+                    <li><span class="check">✓</span> Criacao de site institucional estatico (HTML, CSS, JS) para o investidor ou terceiro indicado — foco em apresentacao corporativa</li>
+                    <li><span class="check">✓</span> 01 mes de hospedagem gratuita fornecida pelo desenvolvedor. Apos o periodo, a infraestrutura passa ao proprietario do site</li>
+                    <li><span class="check">✓</span> Entrega do codigo-fonte completo ao investidor</li>
+                    <li><span class="check">✓</span> Registro de dominio (DNS) e responsabilidade financeira do investidor</li>
+                </ul>
+                <div class="contra-obs">Valor desta contrapartida: R$2.580,00</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PORTFOLIO -->
+    <!--
+    <div class="port-section">
+        <div class="section-title">Portfolio — trabalhos ja entregues pelo desenvolvedor</div>
+        <div class="port-grid">
+            <div class="port-card">
+                <div class="port-thumb">🖋️</div>
+                <div class="port-info">
+                    <div class="port-name">App Financeiro Tattoo</div>
+                    <div class="port-desc">Sistema completo de gestao financeira para tatuadores e estudios</div>
+                    <span class="port-tag">Em lancamento</span>
+                </div>
+            </div>
+            <div class="port-card">
+                <div class="port-thumb">💼</div>
+                <div class="port-info">
+                    <div class="port-name">[Nome do cliente]</div>
+                    <div class="port-desc">Site institucional estatico entregue. Substitua com seu projeto real.</div>
+                    <span class="port-tag" style="background:rgba(255,255,255,0.06);color:#a1a1aa;border-color:rgba(255,255,255,0.1);">Entregue</span>
+                </div>
+            </div>
+            <div class="port-card">
+                <div class="port-thumb">🌐</div>
+                <div class="port-info">
+                    <div class="port-name">[Nome do projeto]</div>
+                    <div class="port-desc">Descreva aqui outro projeto desenvolvido e entregue.</div>
+                    <span class="port-tag" style="background:rgba(255,255,255,0.06);color:#a1a1aa;border-color:rgba(255,255,255,0.1);">Entregue</span>
+                </div>
+            </div>
+            <div class="port-card add">
+                <div class="port-thumb">＋</div>
+                <div class="port-info">
+                    <div class="port-name">Adicionar projeto</div>
+                    <div class="port-desc">Espaco para mais portfolio</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+
+    <!-- PROTOCOLO DE LIQUIDACAO -->
+    <div class="proto-section">
+        <div class="section-title">3. Protocolo de liquidacao do acordo</div>
+        <div class="proto-box">
+            <div class="proto-steps">
+                <div class="proto-step">
+                    <div class="ps-num">1</div>
+                    <div class="ps-text"><strong>Confirmacao do aporte</strong> — Recebimento de R$750,00 inicia o protocolo de entrega imediatamente.</div>
+                </div>
+                <div class="proto-step">
+                    <div class="ps-num">2</div>
+                    <div class="ps-text"><strong>Entrega do codigo-fonte</strong> do website institucional ao investidor ou indicado (7 a 14 dias uteis).</div>
+                </div>
+                <div class="proto-step">
+                    <div class="ps-num">3</div>
+                    <div class="ps-text"><strong>Ativacao da hospedagem</strong> temporaria (1 mes) pelo desenvolvedor, sem custo adicional.</div>
+                </div>
+                <div class="proto-step">
+                    <div class="ps-num">4</div>
+                    <div class="ps-text"><strong>Liberacao das credenciais</strong> de acesso antecipado ao app de gestao financeira para tatuadores.</div>
+                </div>
+                <div class="proto-closing">Estas 4 entregas configuram a <strong>quitacao integral do acordo</strong>. Local e Data: Atibaia — SP, ___/___/______.</div>
+            </div>
+            <div class="proto-right">
+                <div class="pr-label">Responsavel Tecnico</div>
+                <div class="pr-name">Eduardo Veiga</div>
+                <div class="pr-local">Atibaia — SP</div>
+                <div class="pr-aporte-label">Valor do aporte</div>
+                <div class="pr-aporte-value">R$750</div>
+                <div class="pr-aporte-note">Destinado a infraestrutura<br>e publicacao do app</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RODAPE -->
+    <div class="footer">
+        <div class="footer-left">
+            <div class="fl-title">🖋️ CONTROLE <span>FINANCEIRO</span> TATTOO</div>
+            <div class="fl-sub">Desenvolvido por Eduardo Veiga · Atibaia — SP</div>
+        </div>
+        <div class="footer-center">
+            <div class="footer-tag">💻 Produto pronto</div>
+            <div class="footer-tag">🔒 Sem equity</div>
+            <div class="footer-tag">📱 Mobile first</div>
+        </div>
+        <div class="footer-right">
+            <div class="fr-cta">ENTRE EM CONTATO E INVISTA</div>
+            <div class="fr-contact">Eduardo Veiga &nbsp;·&nbsp; (11) 91124-3626</div>
+            <div class="fr-note">Aporte R$750 · Ativos R$2.780 · ROI +270%</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- WHATSAPP FLUTUANTE -->
+<a class="whatsapp-float" href="https://wa.me/5511911243626?text=Ol%C3%A1%20Eduardo%2C%20vi%20seu%20folheto%20e%20tenho%20interesse%20em%20investir%20no%20App%20Financeiro%20Tattoo.%20Podemos%20conversar%3F" target="_blank" rel="noopener">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 4.8C10.37 4.8 5.8 9.37 5.8 15c0 2.19.68 4.22 1.84 5.9l-1.2 4.37 4.5-1.18A11.13 11.13 0 0016 25.2c5.63 0 10.2-4.57 10.2-10.2S21.63 4.8 16 4.8zm5.93 14.58c-.25.7-1.45 1.34-2 1.38-.52.04-1.02.24-3.44-.72-2.9-1.14-4.75-4.07-4.9-4.26-.14-.2-1.16-1.55-1.16-2.96 0-1.4.74-2.09 1-2.38.26-.28.57-.35.76-.35l.55.01c.18 0 .42-.07.66.5.25.6.84 2.05.91 2.2.08.15.13.33.03.53-.1.2-.15.32-.3.5-.14.17-.3.38-.43.51-.14.14-.29.3-.12.58.17.28.74 1.22 1.59 1.97 1.09.97 2.01 1.27 2.3 1.41.28.14.45.12.61-.07.17-.2.72-.84.91-1.12.2-.29.39-.24.66-.14.27.1 1.7.8 1.99.95.29.14.48.21.55.33.07.12.07.7-.18 1.39z" fill="#fff"/>
+    </svg>
+    Falar no WhatsApp
+</a>
+
+</body>
+</html>
